@@ -17,6 +17,18 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
   // 2147483647 seconds = 68.1 year
   
   
+  /*
+   * x_i = 
+   *         W_i           0 <= i < T
+   *         R_(i-T)       T <= i < T + t_r
+   *         F_(i-R-t_r)   T + t_r <=i < T + t_r + t_f
+   */
+  private val w_0 = 0
+  private val r_0 = w_0 + reju_schedule
+  private val f_0 =  r_0 + reju_time
+  private val full_period:Int = reju_schedule + recovery_time + reju_time
+  
+  
   // reliability of running for t time
   private def reliability(t:Int):Double = {
     var sum = 0.0
@@ -33,59 +45,76 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
     return pmf(t)/reliability(t)
   }
 
-  private val vector_length:Int = reju_schedule + recovery_time + reju_time
-  
-  /*
-   * x_i = 
-   *         W_i           0 <= i < T
-   *         R_(i-T)       T <= i < T + t_r
-   *         F_(i-R-t_r)   T + t_r <=i < T + t_r + t_f
-   */
-  
   // probability transtion matrix
-  private val ptm:Array[Array[Double]] = Array.ofDim[Double](vector_length, vector_length)
-  for (i <- 0 until vector_length){
-          for (j <- 0 until vector_length){
-            if (j == i+1 && j<=reju_schedule-1 ){
+  private val ptm:Array[Array[Double]] = Array.ofDim[Double](full_period, full_period)
+  
+  initPTM()
+  private def initPTM(){
+    for (i <- 0 until full_period){
+          for (j <- 0 until full_period){
+            if (j == i+1 && j<=r_0-1 ){
               // W_k -> W_(k+1)
               ptm(i)(j) = 1 - lambda(i)
             }            
-            else if(j == reju_schedule + reju_time && i < reju_schedule-1){
+            else if(j == f_0 && i < r_0-1){
               // W_k -> F_0
               ptm(i)(j) = lambda(i)              
-            }else if( ( i == reju_schedule-1 && j == reju_schedule )  ||  // end of work
-                      ( j == i+1 &&  reju_schedule <= i && i <=  reju_schedule + reju_time -2) || // during rejuvenation
-                      ( i == reju_schedule + reju_time -1 && j == 0 )  || // end of rejuvenation
-                      ( j == i+1 &&  reju_schedule + reju_time <= i && i <=  reju_schedule + reju_time + recovery_time -2)  || // during repair
-                      ( i == reju_schedule + reju_time + recovery_time -1 && j == reju_schedule )  // end of repair
+            }else if( ( i == r_0-1 && j == r_0 )  ||  // end of work
+                      ( j == i+1 &&  r_0 <= i && j <=  f_0 -1) || // during rejuvenation
+                      ( i == f_0 -1 && j == w_0 )  || // end of rejuvenation
+                      ( j == i+1 &&  f_0 <= i && j <=  full_period -1)  || // during repair
+                      ( i == full_period -1 && j == r_0 )  // end of repair
                     ){
               ptm(i)(j) = 1
             }else {
               ptm(i)(j) = 0.0
-            }
-            
+            }            
 //            println("("+i+","+j+") = "+ptm(i)(j))
           }      
+    }    
+  }
+
+  
+  def run1step(states:Array[Double]):Array[Double] = {    
+    if (states.length == full_period){
+      val result = Array.ofDim[Double](full_period)
+      for (i <- 0 until full_period){
+        var sum:Double = 0
+        for (k <- 0 until full_period){
+          sum += states(k) * ptm(k)(i)          
+        }
+        result(i) = sum
+      }
+      return result
+    }else{
+      // throw exception
+      return null;
     }
+  }
+  
+  
   
   
   def report_ptm:Unit= {
     // first line
     print("j\\i")
-    
+    for (i <- 0 until full_period){
+      if (w_0 <= i && i < r_0){ print("\tW"+(i-w_0)) }
+      else if ( r_0 <= i && i < f_0 ) { print("\tR"+(i-r_0)) }
+      else if ( f_0 <= i && i < full_period ) { print("\tF"+(i-f_0)) }
+    }    
+    println()
     
     // content
-    for (j <- 0 until vector_length){
-//      if
+    for (j <- 0 until full_period){
+      if (w_0 <= j && j < r_0){ print("W"+(j-w_0)) }
+      else if ( r_0 <= j && j < f_0 ) { print("R"+(j-r_0)) }
+      else if ( f_0 <= j && j < full_period ) { print("F"+(j-f_0)) }
       
-      
-          for (i <- 0 until vector_length){
-            print((math floor ptm(i)(j) * 100) / 100 +"\t")
-          }      
+      for (i <- 0 until full_period){
+        print("\t"+(math round ptm(i)(j) * 100) / 100.0 )
+      }      
       println()
     }
   }
-  
-//  def 
-
 }

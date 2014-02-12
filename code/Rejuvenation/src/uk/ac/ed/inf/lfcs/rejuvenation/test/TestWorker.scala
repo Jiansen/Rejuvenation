@@ -17,4 +17,7 @@ object TestPMF {
 }
 
 
-class TestWorker extends Worker(10, 3, 2, TestPMF.constantPMF)
+class TestWorker extends Worker(10, 3, 2, TestPMF.constantPMF){
+  val startStates = Array.ofDim[Double](10+3+2)
+  startStates(0) = 1  
+}
