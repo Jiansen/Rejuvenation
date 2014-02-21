@@ -23,11 +23,11 @@ object Huang1995B{
 
 object Huang1995BTest extends App{
   val worker = new Worker(7 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.constantPMF)
-  worker.report_ptm  
+//  worker.report_ptm  
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1  
 
   println()
-  worker.simulate(startStates, 30 * 24 * 6)  
+  worker.simulate(startStates, 12 * 30 * 24 * 6)  
 }

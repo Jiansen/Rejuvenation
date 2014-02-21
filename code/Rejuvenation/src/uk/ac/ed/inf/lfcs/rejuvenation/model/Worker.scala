@@ -1,7 +1,10 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.model
 
-import java.text.DecimalFormat
+import java.io.PrintWriter
 import java.util.Date
+import java.io.IOException
+import java.io.BufferedWriter
+import java.io.FileWriter
 
 class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Double) {
   // reju_schedule: rejuvenation schedule, the maximum time in working status
@@ -121,29 +124,35 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
   
   
   def simulate(init:Array[Double], time:Int):Unit = {
+    var out:PrintWriter = null
+    try{
+         out = new PrintWriter(new BufferedWriter(new FileWriter("writePath", true))) 
+    }
+    
+    
     if(init.length == this.full_period){
       var s_t = init
       val start = new Date()
       for (t <- 0 to time){
-        print(t+":")
+        out.print(t+":")
         
         var live_prop = 0.0
         for (i <- 0 until this.r_0){
           live_prop+=s_t(i)
         }
-        print("\t"+(math round live_prop * 100) / 100.0)
+        out.print("\t"+(math round live_prop * 100) / 100.0)
     
-        for (i <- 0 until this.full_period){
-          print("\t"+(math round s_t(i) * 100) / 100.0 )
-//        print("+"+s_t(i) )      
-        }
-        println
+//        for (i <- 0 until this.full_period){
+//          out.print("\t"+(math round s_t(i) * 100) / 100.0 )
+////        print("+"+s_t(i) )      
+//        }
+        out.println
         s_t = this.run1step(s_t)
       }
       val end = new Date()  
-      println("elapse: "+ (end.getTime() - start.getTime()) );  
+      out.println("elapse: "+ (end.getTime() - start.getTime()) );  
     }else{
-      println("full period("+this.full_period+") is not equal to status length ("+init.length+")");
+      out.println("full period("+this.full_period+") is not equal to status length ("+init.length+")");
     }    
   }
   
