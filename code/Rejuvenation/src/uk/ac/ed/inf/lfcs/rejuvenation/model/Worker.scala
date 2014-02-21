@@ -1,6 +1,7 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.model
 
 import java.text.DecimalFormat
+import java.util.Date
 
 class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Double) {
   // reju_schedule: rejuvenation schedule, the maximum time in working status
@@ -23,10 +24,10 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
    *         R_(i-T)       T <= i < T + t_r
    *         F_(i-R-t_r)   T + t_r <=i < T + t_r + t_f
    */
-  private val w_0 = 0
-  private val r_0 = w_0 + reju_schedule
-  private val f_0 =  r_0 + reju_time
-  private val full_period:Int = reju_schedule + recovery_time + reju_time
+  final val w_0 = 0
+  val r_0 = w_0 + reju_schedule
+  val f_0 =  r_0 + reju_time
+  val full_period:Int = reju_schedule + recovery_time + reju_time
   
   
   // reliability of running for t time
@@ -117,4 +118,35 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
       println()
     }
   }
+  
+  
+  def simulate(init:Array[Double], time:Int):Unit = {
+    if(init.length == this.full_period){
+      var s_t = init
+      val start = new Date()
+      for (t <- 0 to time){
+        print(t+":")
+        
+        var live_prop = 0.0
+        for (i <- 0 until this.r_0){
+          live_prop+=s_t(i)
+        }
+        print("\t"+(math round live_prop * 100) / 100.0)
+    
+        for (i <- 0 until this.full_period){
+          print("\t"+(math round s_t(i) * 100) / 100.0 )
+//        print("+"+s_t(i) )      
+        }
+        println
+        s_t = this.run1step(s_t)
+      }
+      val end = new Date()  
+      println("elapse: "+ (end.getTime() - start.getTime()) );  
+    }else{
+      println("full period("+this.full_period+") is not equal to status length ("+init.length+")");
+    }    
+  }
+  
+  
+  
 }
