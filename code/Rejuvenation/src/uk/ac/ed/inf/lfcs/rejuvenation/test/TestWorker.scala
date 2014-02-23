@@ -1,6 +1,7 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.test
 
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
+import java.io.File
 
 
 object TestPMF {
@@ -22,7 +23,15 @@ object TestWorkder extends App{
   worker.report_ptm
  
   println()
-  worker.simulate(startStates, 200)
+  
+      var out:java.io.PrintStream = null
+    try{
+         out = new java.io.PrintStream(new File("output")) 
+
+    }
+//    var out = System.out   
+  
+  worker.simulate(startStates, 200, out)
 }
 
 /*

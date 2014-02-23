@@ -2,6 +2,7 @@ package uk.ac.ed.inf.lfcs.rejuvenation.example
 
 import java.util.Date
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
+import java.io.File
 
 object Huang1995B{
   val MTBF = 3 * 30 * 24 * 6 // 3 months
@@ -27,13 +28,18 @@ object Huang1995BTest extends App{
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1  
+  
+    var out:java.io.PrintStream = null
+    try{
+         out = new java.io.PrintStream(new File("output")) 
 
+    }
+//    var out = System.out     
   println()
-  worker.simulate(startStates, 5 * 7 * 24 * 6 + 5)  
+  worker.simulate(startStates, 5 * 7 * 24 * 6 + 5, out)  
 }
 
 /*
- * The system is ultra-reliable.
  * 
  * 7 * 24 * 6 = 1008
  * 

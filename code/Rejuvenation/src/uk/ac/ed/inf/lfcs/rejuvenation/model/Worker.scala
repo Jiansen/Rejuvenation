@@ -5,6 +5,8 @@ import java.util.Date
 import java.io.IOException
 import java.io.BufferedWriter
 import java.io.FileWriter
+import java.io.File
+import java.io.PrintStream
 
 class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Double) {
   // reju_schedule: rejuvenation schedule, the maximum time in working status
@@ -123,13 +125,7 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
   }
   
   
-  def simulate(init:Array[Double], time:Int):Unit = {
-//    var out:PrintWriter = null
-//    try{
-//         out = new PrintWriter(new BufferedWriter(new FileWriter("writePath", true))) 
-//
-//    }
-    var out = System.out         
+  def simulate(init:Array[Double], time:Int, out:PrintStream):Unit = {    
     
     if(init.length == this.full_period){
       var s_t = init

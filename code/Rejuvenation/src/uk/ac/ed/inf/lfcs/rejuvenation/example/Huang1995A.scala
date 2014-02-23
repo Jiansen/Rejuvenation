@@ -3,6 +3,7 @@ package uk.ac.ed.inf.lfcs.rejuvenation.example
 import java.util.Date
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import uk.ac.ed.inf.lfcs.rejuvenation.test.TestPMF
+import java.io.File
 
 object Huang1995A {
   val MTBF = 12 * 30 * 24 * 6 // 12 months
@@ -30,7 +31,15 @@ object Huang1995ATest extends App{
   startStates(0) = 1  
 
   println()
-  worker.simulate(startStates, 1010)
+  
+      var out:java.io.PrintStream = null
+    try{
+         out = new java.io.PrintStream(new File("output")) 
+
+    }
+//    var out = System.out   
+  
+  worker.simulate(startStates, 1010, out)
   
 }
 
