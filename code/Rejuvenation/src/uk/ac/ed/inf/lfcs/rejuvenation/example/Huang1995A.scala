@@ -25,21 +25,21 @@ object Huang1995A {
 
 object Huang1995ATest extends App{
   val worker = new Worker(7 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.constantPMF)
-  worker.report_ptm
+//  worker.report_ptm
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1  
 
   println()
   
-      var out:java.io.PrintStream = null
-    try{
-         out = new java.io.PrintStream(new File("output")) 
-
-    }
-//    var out = System.out   
+//      var out:java.io.PrintStream = null
+//    try{
+//         out = new java.io.PrintStream(new File("output")) 
+//
+//    }
+    var out = System.out   
   
-  worker.simulate(startStates, 1010, out)
+  worker.simulate(startStates, 12 * 30  * 24 * 6, out)
   
 }
 
@@ -63,3 +63,21 @@ object Huang1995ATest extends App{
  */
 
 
+/*  L = 12 * 30 * 24 hours
+ * when rejuvenation schedule is set to 7 days, i.e. once a week
+ * 
+ * 
+ * In paper:
+ * 
+ * Hours of Downtime: 8.727 hours
+ * $Cost of Downtime: $586
+ * 
+ * 
+ * Simulation Result:
+ * total down time: 102.0 / 6 = 17 hours
+ * total cost: $612.0
+ * simulation elapse: 1008212 ms = 16.80 minutes
+ * 
+ * 
+ * 17 / (12 * 30  * 24 ) = 0.00196759259
+ */

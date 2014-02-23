@@ -127,27 +127,60 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
   
   def simulate(init:Array[Double], time:Int, out:PrintStream):Unit = {    
     
+    var total_down_time = 0.0
+    
+    // TODO: it is for Huang1995A only
+    val cost_down = 1000 / 6
+    val cost_reju = 40 / 6
+    var total_cost = 0.0
+  
     if(init.length == this.full_period){
       var s_t = init
       val start = new Date()
       for (t <- 0 to time){
-        out.print(t+":")
+//        out.print(t+":")
         
+        // probability of liveness
         var live_prop = 0.0
         for (i <- 0 until this.r_0){
           live_prop+=s_t(i)
         }
-        out.print("\t"+(math round live_prop * 100) / 100.0)
+//        out.print("\t"+(math round live_prop * 10000) / 10000.0)
     
-        for (i <- 0 until this.full_period){
-          out.print("\t"+(math round s_t(i) * 10000) / 10000.0 )
-//        print("+"+s_t(i) )      
+        
+        // expected downtime
+        var down_time = 0.0
+        for (i <- this.r_0 until this.full_period){
+          down_time+=s_t(i) // * 1
         }
-        out.println
+//        out.print("\t"+(math round down_time * 10000) / 10000.0)
+        
+        // expected cost
+        var cost = 0.0
+        for (i <- this.r_0 until this.f_0){
+          cost+= s_t(i) * cost_reju
+        }
+        for (i <- this.f_0 until this.full_period){
+          cost+=s_t(i) * cost_down
+        }
+        
+        total_down_time += down_time
+        total_cost += cost
+//        for (i <- 0 until this.full_period){
+//          out.print("\t"+(math round s_t(i) * 10000) / 10000.0 )
+////        print("+"+s_t(i) )      
+//        }
+//        out.println
         s_t = this.run1step(s_t)
       }
       val end = new Date()  
-      out.println("elapse: "+ (end.getTime() - start.getTime()) );  
+      
+      out.println("total down time: "+ total_down_time );  
+      out.println("total cost: "+ total_cost );  
+      out.println("simulation elapse: "+ (end.getTime() - start.getTime()) );  
+      
+      
+      
     }else{
       out.println("full period("+this.full_period+") is not equal to status length ("+init.length+")");
     }    
