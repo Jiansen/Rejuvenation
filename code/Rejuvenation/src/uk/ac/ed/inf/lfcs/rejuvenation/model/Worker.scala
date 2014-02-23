@@ -124,11 +124,12 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
   
   
   def simulate(init:Array[Double], time:Int):Unit = {
-    var out:PrintWriter = null
-    try{
-         out = new PrintWriter(new BufferedWriter(new FileWriter("writePath", true))) 
-    }
-    
+//    var out:PrintWriter = null
+//    try{
+//         out = new PrintWriter(new BufferedWriter(new FileWriter("writePath", true))) 
+//
+//    }
+    var out = System.out         
     
     if(init.length == this.full_period){
       var s_t = init
@@ -142,10 +143,10 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
         }
         out.print("\t"+(math round live_prop * 100) / 100.0)
     
-//        for (i <- 0 until this.full_period){
-//          out.print("\t"+(math round s_t(i) * 100) / 100.0 )
-////        print("+"+s_t(i) )      
-//        }
+        for (i <- 0 until this.full_period){
+          out.print("\t"+(math round s_t(i) * 10000) / 10000.0 )
+//        print("+"+s_t(i) )      
+        }
         out.println
         s_t = this.run1step(s_t)
       }

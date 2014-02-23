@@ -29,5 +29,27 @@ object Huang1995BTest extends App{
   startStates(0) = 1  
 
   println()
-  worker.simulate(startStates, 12 * 30 * 24 * 6)  
+  worker.simulate(startStates, 5 * 7 * 24 * 6 + 5)  
 }
+
+/*
+ * The system is ultra-reliable.
+ * 
+ * 7 * 24 * 6 = 1008
+ * 
+ * 1006:	1.0		1.0E-4	1.0E-4	1.0E-4	1.0E-4 ...	1.0E-4	1.0E-4	1.0E-4	1.0E-4
+ * 1007:	1.0		1.0E-4	1.0E-4	1.0E-4 ...	1.0E-4	1.0E-4	1.0E-4	1.0E-4
+ * 1008:	0.05	1.0E-4	1.0E-4	1.0E-4 ...	0.9543	0.0	1.0E-4	1.0E-4
+ * 1009:	1.0		0.9543	1.0E-4	1.0E-4 ...	1.0E-4	0.0	0.0	1.0E-4
+ * 1010:	1.0		1.0E-4	0.9543	1.0E-4 ...	1.0E-4	0.0	0.0	0.0
+ * 1011:	1.0		1.0E-4	1.0E-4	0.9543 ...	0.0	0.0	0.0	0.0
+ * 1012:	1.0		0.0	1.0E-4	1.0E-4  0.9543   ...	0.0	0.0	0.0	0.0
+ * 1013:	1.0		0.0	0.0	1.0E-4  1.0E-4 ...	0.0	0.0	0.0	0.0
+ * ...
+ * 5044:	0.21	3.0E-4	3.0E-4	3.0E-4	.... 0.7913	0.0	1.0E-4	1.0E-4
+ * ...
+ * 
+ * The system only has 95% of chance to survive in the first period.
+ * 
+ * It takes more than ?? hours (? years) when the system is considered stable.
+ */
