@@ -23,7 +23,7 @@ object Huang1995C{
 }
 
 object Huang1995CTest extends App{
-  val worker = new Worker(2 * 7 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.constantPMF)
+  val worker = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.constantPMF)
 //  worker.report_ptm  
   
   val startStates = Array.ofDim[Double](worker.full_period)
@@ -31,14 +31,14 @@ object Huang1995CTest extends App{
 
   println()
   
-    var out:java.io.PrintStream = null
-    try{
-         out = new java.io.PrintStream(new File("output")) 
-
-    }
-//    var out = System.out     
+//    var out:java.io.PrintStream = null
+//    try{
+//         out = new java.io.PrintStream(new File("output")) 
+//
+//    }
+    var out = System.out     
   
-  worker.simulate(startStates, 1 * worker.full_period + 3, out)    
+  worker.simulate(startStates, 12   * 24 * 6, Huang1995C.cost_reju, Huang1995C.cost_down, out)    
 }
 
 /*
@@ -60,4 +60,24 @@ object Huang1995CTest extends App{
  * The system only has 95% of chance to survive in the first period.
  * 
  * It takes more than ?? hours (? years) when the system is considered stable.
+ */
+
+
+
+/*  L = 12 * 30 * 24 hours
+ * when rejuvenation schedule is set to 14 days, i.e. once every two week
+ * 
+ * 
+ * In paper:
+ * 
+ * Hours of Downtime: 6.36 hours
+ * $Cost of Downtime: $1110
+ * 
+ * 
+ * Simulation Result:
+ * total down time: 40.4324799081384 / 6 = 6.74 hours
+ * total cost: $12678.700237815397
+ * simulation elapse: 3705629 ms = 61.76 minutes
+ * 
+ * 
  */

@@ -31,7 +31,7 @@ object TestWorkder extends App{
     }
 //    var out = System.out   
   
-  worker.simulate(startStates, 200, out)
+  worker.simulate(startStates, 200, 0, 0, out)
 }
 
 /*
@@ -56,4 +56,4 @@ the availiability reaches lowest value at t = full_period
 200:	0.77	0.05	0.05	0.05	0.04	0.04	0.04	0.04	0.04	0.04	0.03	0.03	0.03	0.03	0.03	0.03	0.03	0.02	0.02	0.02	0.02	0.02	0.02	0.01	0.01	0.01	0.01	0.01	0.01	0.0	0.0	0.05	0.05	0.04	0.04	0.04
 
 
-  */ 
+  */

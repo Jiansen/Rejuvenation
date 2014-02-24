@@ -125,13 +125,9 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
   }
   
   
-  def simulate(init:Array[Double], time:Int, out:PrintStream):Unit = {    
+  def simulate(init:Array[Double], time:Int, cost_reju:Double, cost_down:Double, out:PrintStream):Unit = {    
     
     var total_down_time = 0.0
-    
-    // TODO: it is for Huang1995A only
-    val cost_down = 1000 / 6
-    val cost_reju = 40 / 6
     var total_cost = 0.0
   
     if(init.length == this.full_period){
@@ -139,7 +135,8 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
       val start = new Date()
       for (t <- 0 to time){
 //        out.print(t+":")
-        
+        if(t % 10000 == 0){         out.println(t+":") }
+
         // probability of liveness
         var live_prop = 0.0
         for (i <- 0 until this.r_0){
@@ -178,14 +175,9 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
       out.println("total down time: "+ total_down_time );  
       out.println("total cost: "+ total_cost );  
       out.println("simulation elapse: "+ (end.getTime() - start.getTime()) );  
-      
-      
-      
+
     }else{
       out.println("full period("+this.full_period+") is not equal to status length ("+init.length+")");
     }    
   }
-  
-  
-  
 }

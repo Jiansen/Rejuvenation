@@ -5,43 +5,27 @@ import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import uk.ac.ed.inf.lfcs.rejuvenation.test.TestPMF
 import java.io.File
 
-object Huang1995A {
-  val MTBF = 12 * 30 * 24 * 6 // 12 months
-  val failure_repair = 3  // 30 minutes
-  val base_longevity_interval = 7 * 24 * 6 // 7 days  = 1008 * 10 hour
-  val rejeneation_time = 2 // 20 minutes
+object Huang1995BCTest extends App{
+  val workerB = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.constantPMF)
+//  worker.report_ptm  
   
-  val cost_down = 1000 / 6
-  val cost_reju = 40 / 6
-  
-  val constantPMF: Int=>Double =  {
-    case t => {
-      if (base_longevity_interval < t && t< MTBF){ 1.0/(MTBF - base_longevity_interval) }
-      else{ 0 }
-    }
-  }  
-  
-}
+  val startStatesB = Array.ofDim[Double](workerB.full_period)
+  startStatesB(0) = 1  
 
-object Huang1995ATest extends App{
-  val worker = new Worker(14 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.constantPMF)
-//  worker.report_ptm
-  
-  val startStates = Array.ofDim[Double](worker.full_period)
-  startStates(0) = 1  
+  println()  
+  val out = System.out     
+  workerB.simulate(startStatesB, 12 *30 * 24 * 6, Huang1995B.cost_reju, Huang1995B.cost_down, out)
 
-  println()
+    println()  
+
+  val workerC = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.constantPMF)
+//  worker.report_ptm  
   
-//      var out:java.io.PrintStream = null
-//    try{
-//         out = new java.io.PrintStream(new File("output")) 
-//
-//    }
-    var out = System.out   
-  
-  worker.simulate(startStates, 12 *30 * 24 * 6, Huang1995A.cost_reju, Huang1995A.cost_down, out)
-  // 51840 = 12 *30 * 24 * 6
-  // expect 61 minutes to simulate
+  val startStatesC = Array.ofDim[Double](workerC.full_period)
+  startStatesC(0) = 1  
+
+  println()  
+  workerC.simulate(startStatesC, 12 *30 * 24 * 6, Huang1995C.cost_reju, Huang1995C.cost_down, out)    
 }
 
 
