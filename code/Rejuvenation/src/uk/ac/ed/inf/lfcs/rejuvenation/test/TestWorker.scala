@@ -31,7 +31,7 @@ object TestWorkder extends App{
     }
 //    var out = System.out   
   
-  worker.simulate(startStates, 200, 0, 0, out)
+//  worker.simulate(startStates, 200, 0, 0, out)
 }
 
 /*

@@ -1,9 +1,8 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.example
 
-import java.util.Date
+import uk.ac.ed.inf.lfcs.rejuvenation.model.SimpleTerminalConfig
+import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
-import uk.ac.ed.inf.lfcs.rejuvenation.test.TestPMF
-import java.io.File
 
 object Huang1995A {
   val MTBF = 12 * 30 * 24 * 6 // 12 months
@@ -39,7 +38,9 @@ object Huang1995ATest extends App{
 //    }
     var out = System.out   
   
-  worker.simulate(startStates, 12 *30 * 24 * 6, Huang1995A.cost_reju, Huang1995A.cost_down, out)
+
+  val simu = new Simulator(SimpleTerminalConfig);
+  simu.simulate(worker, startStates, 12 *30 * 24 * 6, 0, Huang1995A.cost_down, Huang1995A.cost_reju)
   // 51840 = 12 *30 * 24 * 6
   // expect 61 minutes to simulate
 }

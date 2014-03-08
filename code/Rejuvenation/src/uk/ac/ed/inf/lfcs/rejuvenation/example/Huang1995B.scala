@@ -3,6 +3,8 @@ package uk.ac.ed.inf.lfcs.rejuvenation.example
 import java.util.Date
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import java.io.File
+import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
+import uk.ac.ed.inf.lfcs.rejuvenation.model.SimpleTerminalConfig
 
 object Huang1995B{
   val MTBF = 3 * 30 * 24 * 6 // 3 months
@@ -34,9 +36,12 @@ object Huang1995BTest extends App{
 //         out = new java.io.PrintStream(new File("output")) 
 //
 //    }
-    var out = System.out     
-  println()
-  worker.simulate(startStates, 12   * 24 * 6, Huang1995B.cost_reju, Huang1995B.cost_down, out)  
+//    var out = System.out     
+//  println()
+//  worker.simulate(startStates, 12   * 24 * 6, Huang1995B.cost_reju, Huang1995B.cost_down, out)  
+  
+  val simu = new Simulator(SimpleTerminalConfig);
+  simu.simulate(worker, startStates, 12 * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
 }
 
 /*

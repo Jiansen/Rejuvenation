@@ -4,28 +4,28 @@ import java.util.Date
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import uk.ac.ed.inf.lfcs.rejuvenation.test.TestPMF
 import java.io.File
+import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
+import uk.ac.ed.inf.lfcs.rejuvenation.model.SimpleTerminalConfig
 
 object Huang1995BCTest extends App{
   val workerB = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.constantPMF)
-//  worker.report_ptm  
-  
+//  worker.report_ptm    
   val startStatesB = Array.ofDim[Double](workerB.full_period)
   startStatesB(0) = 1  
 
   println()  
-  val out = System.out     
-  workerB.simulate(startStatesB, 12 *30 * 24 * 6, Huang1995B.cost_reju, Huang1995B.cost_down, out)
-
-    println()  
-
-  val workerC = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.constantPMF)
-//  worker.report_ptm  
   
+  val simu = new Simulator(SimpleTerminalConfig)  
+  simu.simulate(workerB, startStatesB, 12 *30 * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
+
+  println()  
+
+  val workerC = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.constantPMF)  
   val startStatesC = Array.ofDim[Double](workerC.full_period)
   startStatesC(0) = 1  
 
   println()  
-  workerC.simulate(startStatesC, 12 *30 * 24 * 6, Huang1995C.cost_reju, Huang1995C.cost_down, out)    
+  simu.simulate(workerC, startStatesC, 12 *30 * 24 * 6, 0, Huang1995C.cost_down, Huang1995C.cost_reju)
 }
 
 
