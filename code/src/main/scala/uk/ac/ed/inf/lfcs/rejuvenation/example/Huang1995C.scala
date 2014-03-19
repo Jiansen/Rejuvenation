@@ -5,6 +5,7 @@ import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import java.io.File
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
 import uk.ac.ed.inf.lfcs.rejuvenation.model.SimpleTerminalConfig
+import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.ConstantFailureDistribution
 
 object Huang1995C{
   val MTBF = 3 * 30 * 24 * 6 // 3 months
@@ -15,17 +16,12 @@ object Huang1995C{
   val cost_down = 5000 / 6
   val cost_reju = 5 / 6
   
-  val constantPMF: Int=>Double =  {
-    case t => {
-      if (base_longevity_interval < t && t< MTBF){ 1.0/(MTBF - base_longevity_interval) }
-      else{ 0 }
-    }
-  }   
+  val cfd  =   new ConstantFailureDistribution(base_longevity_interval, MTBF)   
   
 }
 
 object Huang1995CTest extends App{
-  val worker = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.constantPMF)
+  val worker = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.cfd)
 //  worker.report_ptm  
   
   val startStates = Array.ofDim[Double](worker.full_period)

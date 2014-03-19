@@ -7,8 +7,9 @@ import java.io.BufferedWriter
 import java.io.FileWriter
 import java.io.File
 import java.io.PrintStream
+import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.FailureDistribution
 
-class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Double) {
+class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, fd:FailureDistribution) {
   // reju_schedule: rejuvenation schedule, the maximum time in working status
   // recovery_time: recovery time, the time for recovery from unexpected failure, reju_time excluded
   // reju_time:  the time for rejuvenation process
@@ -34,23 +35,6 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
   val f_0 =  r_0 + reju_time
   val full_period:Int = reju_schedule + recovery_time + reju_time
   
-  
-  // reliability of running for t time
-  private def reliability(t:Int):Double = {
-    var sum = 0.0
-    var i = 0;
-    while(i<t){
-      sum += pmf(i)
-      i +=1
-    }    
-    return 1-sum
-  }
-  
-  // failure rate at time t
-  private def lambda(t:Int):Double = {
-    return pmf(t)/reliability(t)
-  }
-
   // probability transtion matrix
   private val ptm:Array[Array[Double]] = Array.ofDim[Double](full_period, full_period)
   
@@ -60,11 +44,11 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
           for (j <- 0 until full_period){
             if (j == i+1 && j<=r_0-1 ){
               // W_k -> W_(k+1)
-              ptm(i)(j) = 1 - lambda(i)
-            }            
+              ptm(i)(j) = 1 - fd.lambda(i)
+            }
             else if(j == f_0 && i < r_0-1){
               // W_k -> F_0
-              ptm(i)(j) = lambda(i)              
+              ptm(i)(j) = fd.lambda(i)
             }else if( ( i == r_0-1 && j == r_0 )  ||  // end of work
                       ( j == i+1 &&  r_0 <= i && j <=  f_0 -1) || // during rejuvenation
                       ( i == f_0 -1 && j == w_0 )  || // end of rejuvenation
@@ -96,10 +80,7 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
       // throw exception
       return null;
     }
-  }
-  
-  
-  
+  }  
   
   def report_ptm:Unit= {
     // first line
@@ -123,61 +104,4 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, pmf:Int=>Doubl
       println()
     }
   }
-  
-  
-//  def simulate(init:Array[Double], time:Int, cost_reju:Double, cost_down:Double, out:PrintStream):Unit = {    
-//    
-//    var total_down_time = 0.0
-//    var total_cost = 0.0
-//  
-//    if(init.length == this.full_period){
-//      var s_t = init
-//      val start = new Date()
-//      for (t <- 0 to time){
-////        out.print(t+":")
-//        if(t % 10000 == 0){         out.println(t+":") }
-//
-//        // probability of liveness
-//        var live_prop = 0.0
-//        for (i <- 0 until this.r_0){
-//          live_prop+=s_t(i)
-//        }
-////        out.print("\t"+(math round live_prop * 10000) / 10000.0)
-//    
-//        
-//        // expected downtime
-//        var down_time = 0.0
-//        for (i <- this.r_0 until this.full_period){
-//          down_time+=s_t(i) // * 1
-//        }
-////        out.print("\t"+(math round down_time * 10000) / 10000.0)
-//        
-//        // expected cost
-//        var cost = 0.0
-//        for (i <- this.r_0 until this.f_0){
-//          cost+= s_t(i) * cost_reju
-//        }
-//        for (i <- this.f_0 until this.full_period){
-//          cost+=s_t(i) * cost_down
-//        }
-//        
-//        total_down_time += down_time
-//        total_cost += cost
-////        for (i <- 0 until this.full_period){
-////          out.print("\t"+(math round s_t(i) * 10000) / 10000.0 )
-//////        print("+"+s_t(i) )      
-////        }
-////        out.println
-//        s_t = this.run1step(s_t)
-//      }
-//      val end = new Date()  
-//      
-//      out.println("total down time: "+ total_down_time );  
-//      out.println("total cost: "+ total_cost );
-//      out.println("simulation elapse: "+ (end.getTime() - start.getTime()) );  
-//
-//    }else{
-//      out.println("full period("+this.full_period+") is not equal to status length ("+init.length+")");
-//    }    
-//  }
 }

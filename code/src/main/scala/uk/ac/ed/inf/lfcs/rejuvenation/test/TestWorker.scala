@@ -2,22 +2,10 @@ package uk.ac.ed.inf.lfcs.rejuvenation.test
 
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import java.io.File
-
-
-object TestPMF {
-  
-  val constantPMF: Int=>Double =  {
-    case t => {
-      if (0 < t && t< 30){ 1.0/30 }
-      else{ 0 }
-    }
-  }  
-}
-
-
+import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.ConstantFailureDistribution
 
 object TestWorkder extends App{
-  val worker = new Worker(30, 3, 2, TestPMF.constantPMF)
+  val worker = new Worker(30, 3, 2, new ConstantFailureDistribution(0, 30))
   val startStates = Array.ofDim[Double](30+3+2)
   startStates(0) = 1  
   worker.report_ptm

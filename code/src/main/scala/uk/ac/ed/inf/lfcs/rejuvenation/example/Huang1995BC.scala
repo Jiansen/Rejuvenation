@@ -2,13 +2,12 @@ package uk.ac.ed.inf.lfcs.rejuvenation.example
 
 import java.util.Date
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
-import uk.ac.ed.inf.lfcs.rejuvenation.test.TestPMF
 import java.io.File
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
 import uk.ac.ed.inf.lfcs.rejuvenation.model.SimpleTerminalConfig
 
 object Huang1995BCTest extends App{
-  val workerB = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.constantPMF)
+  val workerB = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
 //  worker.report_ptm    
   val startStatesB = Array.ofDim[Double](workerB.full_period)
   startStatesB(0) = 1  
@@ -20,7 +19,7 @@ object Huang1995BCTest extends App{
 
   println()  
 
-  val workerC = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.constantPMF)  
+  val workerC = new Worker(14 * 24 * 6, Huang1995C.failure_repair, Huang1995C.rejeneation_time, Huang1995C.cfd)  
   val startStatesC = Array.ofDim[Double](workerC.full_period)
   startStatesC(0) = 1  
 

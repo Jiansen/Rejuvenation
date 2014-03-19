@@ -1,2 +1,5 @@
-/code/Rejuvenation/bin
-/code/.metadata
+*~
+.metadata
+/code/target
+/code/project/project
+/code/project/target
