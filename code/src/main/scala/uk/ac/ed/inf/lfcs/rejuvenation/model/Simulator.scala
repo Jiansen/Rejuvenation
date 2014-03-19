@@ -32,7 +32,7 @@ class Simulator(conf:SimulationConfig) {
       
       val start = new Date()
       for (t <- 0 to time){
-        out.print(t+":")
+        out.print(t)
 //        if(t % 10000 == 0){         out.println(t+":") }
 
         // probability of liveness

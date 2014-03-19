@@ -35,7 +35,7 @@ object Huang1995ATest extends App{
   
 
   val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates, 12 *30 * 24 * 6, 0, Huang1995A.cost_down, Huang1995A.cost_reju)
+  simu.simulate(worker, startStates,  24 * 6, 0, Huang1995A.cost_down, Huang1995A.cost_reju)
   // 51840 = 12 *30 * 24 * 6
   // expect 61 minutes to simulate
 }
