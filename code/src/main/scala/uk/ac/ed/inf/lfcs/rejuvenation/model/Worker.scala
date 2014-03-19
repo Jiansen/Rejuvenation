@@ -84,7 +84,7 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, fd:FailureDist
   
   def report_ptm:Unit= {
     // first line
-    print("j\\i")
+    print("# j\\i")
     for (i <- 0 until full_period){
       if (w_0 <= i && i < r_0){ print("\tW"+(i-w_0)) }
       else if ( r_0 <= i && i < f_0 ) { print("\tR"+(i-r_0)) }
@@ -94,9 +94,9 @@ class Worker(reju_schedule:Int, recovery_time:Int, reju_time:Int, fd:FailureDist
     
     // content
     for (j <- 0 until full_period){
-      if (w_0 <= j && j < r_0){ print("W"+(j-w_0)) }
-      else if ( r_0 <= j && j < f_0 ) { print("R"+(j-r_0)) }
-      else if ( f_0 <= j && j < full_period ) { print("F"+(j-f_0)) }
+      if (w_0 <= j && j < r_0){ print("# W"+(j-w_0)) }
+      else if ( r_0 <= j && j < f_0 ) { print("# R"+(j-r_0)) }
+      else if ( f_0 <= j && j < full_period ) { print("# F"+(j-f_0)) }
       
       for (i <- 0 until full_period){
         print("\t"+(math round ptm(i)(j) * 100) / 100.0 )

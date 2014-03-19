@@ -18,7 +18,7 @@ class Simulator(conf:SimulationConfig) {
       var s_t = initState
       
       // t, availability, accumulated cost, accumulated revenue, accumulated profit, accumulated downtime, accumulated rejuvenation time , status*
-      out.print("time\tavailability\taccumulated cost\taccumulated revenue\taccumulated profit\taccumulated downtime\taccumulated rejuvenation time\t")
+      out.print("# time\tavailability\taccumulated cost\taccumulated revenue\taccumulated profit\taccumulated downtime\taccumulated rejuvenation time\t")
       if(conf.print_states){
       for (i <- 0 until worker.full_period){
         if (worker.w_0 <= i && i < worker.r_0){ out.print("\tW"+(i-worker.w_0)) }
@@ -82,10 +82,10 @@ class Simulator(conf:SimulationConfig) {
       val end = new Date()  
         
       if(conf.print_elapse){
-        out.println("simulation elapse: "+ (end.getTime() - start.getTime()) + " ms" );            
+        out.println("# simulation elapse: "+ (end.getTime() - start.getTime()) + " ms" );            
       }
     }else{
-      out.println("full period("+worker.full_period+") is not equal to initial status length ("+initState.length+")");
+      out.println("# full period("+worker.full_period+") is not equal to initial status length ("+initState.length+")");
     }    
   }  
   

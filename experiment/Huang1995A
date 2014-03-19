@@ -1,0 +1,1 @@
+java -cp ../code/target/scala-2.10/Rejuvenation.jar uk.ac.ed.inf.lfcs.rejuvenation.example.Huang1995ATest  > Huang1995ATest.dat
