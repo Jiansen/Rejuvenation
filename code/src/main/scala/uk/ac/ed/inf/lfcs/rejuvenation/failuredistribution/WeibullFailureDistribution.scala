@@ -1,12 +1,18 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution
 
-case class ConstantFailureDistribution(val start:Int, val end:Int) extends FailureDistribution{
+case class WeibullFailureDistribution(val theta:Double, val beta:Double) extends FailureDistribution{
 
+  // accumulate failure rate bwteen 0 to t
+  private def cdf(t:Int): Double =  {
+    if (t < 0) {0}
+    else {
+      1 - Math.exp(-(t/theta)*beta)
+    }
+  }     
+  
   // accumulate failure rate bwteen t-1 to t
   private def pmf(t:Int): Double =  {
-    // TODO: check end > start
-    if (start < t && t< end){ 1.0/(end - start) }
-    else{0}
+    cdf(t) - cdf(t-1)
   }   
     
   def reliability(t:Int):Double = {

@@ -1,10 +1,6 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution
 
-abstract class FailureDistribution {
-  
-  // reliability of running for t time
-  def reliability(t:Int):Double 
-  
+abstract class FailureDistribution {  
   // failure rate at time t
   def lambda(t:Int):Double  
 }
