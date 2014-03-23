@@ -13,7 +13,7 @@ set xlabel 'Time'
 set ylabel 'accumulated downtime'
 set xrange [0: *]
 set yrange [0: *]
-plot "$name.dat"  using 1:6 with lines  title 'Accumulated Downtime'
+plot "$name.dat"  using 1:7 with lines  title 'Accumulated Downtime'
 
 set output
 __EOF

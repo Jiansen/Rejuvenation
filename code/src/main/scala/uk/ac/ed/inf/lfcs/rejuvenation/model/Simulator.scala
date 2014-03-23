@@ -63,8 +63,7 @@ class Simulator(conf:SimulationConfig) {
         accu_revenue += revenue
         
         out.print("\t"+(math round accu_revenue * sig)*1.0 / sig)           
-        out.print("\t"+(math round (accu_revenue - accu_cost) * sig * 1.0 ) / sig)           
-        out.print("\t"+(math round (accu_revenue - accu_cost) * sig * 1.0) / sig)
+        out.print("\t"+(math round (accu_revenue - accu_cost) * sig * 1.0 ) / sig)     
         
         out.print("\t"+(math round (accu_down_time * sig*1.0) / sig))          
         out.print("\t"+(math round (accu_reju_time * sig*1.0) / sig))

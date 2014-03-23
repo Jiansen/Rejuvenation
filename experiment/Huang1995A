@@ -1,3 +1,3 @@
 java -cp ../code/target/scala-2.10/Rejuvenation.jar uk.ac.ed.inf.lfcs.rejuvenation.example.Huang1995ATest  > Huang1995A.dat
 
-./plot_charts Huang1995A
+./plot_charts.sh Huang1995A
