@@ -12,8 +12,7 @@ set title "$name: accumulated profit"
 set xlabel 'Time'
 set ylabel 'accumulated profit'
 set xrange [0: *]
-set yrange [0: *]
-plot "$name.dat"  using 1:2 with lines  title 'Accumulated Profit'
+plot "$name.dat"  using 1:5 with lines  title 'Accumulated Profit'
 
 set output
 __EOF

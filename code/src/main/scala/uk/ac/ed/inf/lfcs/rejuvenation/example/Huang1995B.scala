@@ -36,7 +36,7 @@ object Huang1995BTest extends App{
 //  worker.simulate(startStates, 12   * 24 * 6, Huang1995B.cost_reju, Huang1995B.cost_down, out)  
   
   val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates, 12 * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
+  simu.simulate(worker, startStates, 12*30  * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
 }
 
 /*

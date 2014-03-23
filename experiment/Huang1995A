@@ -1,12 +1,3 @@
-
-
 java -cp ../code/target/scala-2.10/Rejuvenation.jar uk.ac.ed.inf.lfcs.rejuvenation.example.Huang1995ATest  > Huang1995A.dat
 
-
-
-./plot_availability.sh Huang1995A
-./plot_acc_cost.sh Huang1995A
-./plot_acc_down_time.sh Huang1995A
-./plot_acc_pro.sh Huang1995A
-./plot_acc_rej_time.sh Huang1995A
-./plot_acc_rev.sh Huang1995A
+./plot_charts Huang1995A

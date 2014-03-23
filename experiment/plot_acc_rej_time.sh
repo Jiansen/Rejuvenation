@@ -13,7 +13,7 @@ set xlabel 'Time'
 set ylabel 'accumulated rejuvenation time'
 set xrange [0: *]
 set yrange [0: *]
-plot "$name.dat"  using 1:2 with lines  title 'Accumulated Rejuvenation Time'
+plot "$name.dat"  using 1:7 with lines  title 'Accumulated Rejuvenation Time'
 
 set output
 __EOF
