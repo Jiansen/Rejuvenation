@@ -14,32 +14,41 @@ object Huang1995A {
   val cost_down = 1000 / 6
   val cost_reju = 40 / 6
   
-  val cfd  =   new ConstantFailureDistribution(base_longevity_interval, MTBF)   
+  val cfd  =   new ConstantFailureDistribution(base_longevity_interval, 2*MTBF-base_longevity_interval)   
 }
 
-object Huang1995ATest extends App{
-  val worker = new Worker(14 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.cfd)
-//  worker.report_ptm
+object Huang1995ATest1 extends App{
+  // no rejuvenation
+  val worker = new Worker(2*Huang1995A.MTBF-Huang1995A.base_longevity_interval+1, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.cfd)
   
   val startStates = Array.ofDim[Double](worker.full_period)
-  startStates(0) = 1  
-
-  println()
-  
-//      var out:java.io.PrintStream = null
-//    try{
-//         out = new java.io.PrintStream(new File("output")) 
-//
-//    }
-    var out = System.out   
-  
+  startStates(0) = 1    
 
   val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates,  24 * 6, 0, Huang1995A.cost_down, Huang1995A.cost_reju)
-  // 51840 = 12 *30 * 24 * 6
-  // expect 61 minutes to simulate
+  simu.simulate(worker, startStates, 12 *30 * 24 * 6, 0, Huang1995A.cost_down, Huang1995A.cost_reju)
 }
 
+object Huang1995ATest2 extends App{
+//  once every 3 weeks
+  val worker = new Worker(21 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.cfd)
+  
+  val startStates = Array.ofDim[Double](worker.full_period)
+  startStates(0) = 1    
+
+  val simu = new Simulator(SimpleTerminalConfig);
+  simu.simulate(worker, startStates, 12 *30 * 24 * 6, 0, Huang1995A.cost_down, Huang1995A.cost_reju)
+}
+
+object Huang1995ATest3 extends App{
+//  once every two weeks
+  val worker = new Worker(14 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.cfd)
+  
+  val startStates = Array.ofDim[Double](worker.full_period)
+  startStates(0) = 1    
+
+  val simu = new Simulator(SimpleTerminalConfig);
+  simu.simulate(worker, startStates, 12 *30 * 24 * 6, 0, Huang1995A.cost_down, Huang1995A.cost_reju)
+}
 
 /*
  * The system is ultra-reliable.

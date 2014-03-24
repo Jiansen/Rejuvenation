@@ -16,24 +16,37 @@ object Huang1995B{
   val cost_down = 5000 / 6
   val cost_reju = 5 / 6
   
-  val cfd  =   new ConstantFailureDistribution(base_longevity_interval, MTBF)     
+  val cfd  =   new ConstantFailureDistribution(base_longevity_interval,  2*MTBF-base_longevity_interval)     
 }
 
-object Huang1995BTest extends App{
-  val worker = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
-//  worker.report_ptm  
+object Huang1995BTest1 extends App{
+  // no rejuvenation  
+  val worker = new Worker(2*Huang1995B.MTBF-Huang1995B.base_longevity_interval+1, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1  
   
-//    var out:java.io.PrintStream = null
-//    try{
-//         out = new java.io.PrintStream(new File("output")) 
-//
-//    }
-//    var out = System.out     
-//  println()
-//  worker.simulate(startStates, 12   * 24 * 6, Huang1995B.cost_reju, Huang1995B.cost_down, out)  
+  val simu = new Simulator(SimpleTerminalConfig);
+  simu.simulate(worker, startStates, 12*30  * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
+}
+
+object Huang1995BTest2 extends App{
+  // once every 2 weeks 
+  val worker = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
+  
+  val startStates = Array.ofDim[Double](worker.full_period)
+  startStates(0) = 1  
+  
+  val simu = new Simulator(SimpleTerminalConfig);
+  simu.simulate(worker, startStates, 12*30  * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
+}
+
+object Huang1995BTest3 extends App{
+  // once a week
+  val worker = new Worker(7 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
+  
+  val startStates = Array.ofDim[Double](worker.full_period)
+  startStates(0) = 1  
   
   val simu = new Simulator(SimpleTerminalConfig);
   simu.simulate(worker, startStates, 12*30  * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
