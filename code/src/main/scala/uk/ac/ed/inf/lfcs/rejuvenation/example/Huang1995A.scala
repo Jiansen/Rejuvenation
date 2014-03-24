@@ -12,9 +12,7 @@ object Huang1995A {
   val rejeneation_time = 2 // 20 minutes
   
   val cost_down = 1000.0 / 6
-  val cost_reju = 40.0 / 6
-
-  val fd  =   new UniformFailureDistribution(base_longevity_interval, 2*MTBF-base_longevity_interval)   
+  val cost_reju = 40.0 / 6 
 }
 
 //object Huang1995ATest1 extends App{
@@ -30,7 +28,8 @@ object Huang1995A {
 
 object Huang1995ATest2 extends App{
 //  once every 3 weeks
-  val worker = new Worker(21 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.fd)
+  val fd2  =   new UniformFailureDistribution(7 * 24 * 6,  3*7 * 24 * 6)    
+  val worker = new Worker(21 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, fd2)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1    
@@ -41,7 +40,8 @@ object Huang1995ATest2 extends App{
 
 object Huang1995ATest3 extends App{
 //  once every two weeks
-  val worker = new Worker(14 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.fd)
+  val fd3  =   new UniformFailureDistribution(7 * 24 * 6,  2*7 * 24 * 6)      
+  val worker = new Worker(14 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, fd3)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1    
