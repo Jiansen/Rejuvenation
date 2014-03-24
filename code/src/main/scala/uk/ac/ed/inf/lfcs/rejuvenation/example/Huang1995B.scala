@@ -1,11 +1,9 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.example
 
-import java.util.Date
-import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
-import java.io.File
-import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
+import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.UniformFailureDistribution
 import uk.ac.ed.inf.lfcs.rejuvenation.model.SimpleTerminalConfig
-import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.ConstantFailureDistribution
+import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
+import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 
 object Huang1995B{
   val MTBF = 3 * 30 * 24 * 6 // 3 months
@@ -16,12 +14,12 @@ object Huang1995B{
   val cost_down = 5000 / 6
   val cost_reju = 5 / 6
   
-  val cfd  =   new ConstantFailureDistribution(base_longevity_interval,  2*MTBF-base_longevity_interval)     
+  val fd  =   new UniformFailureDistribution(base_longevity_interval,  2*MTBF-base_longevity_interval)     
 }
 
 object Huang1995BTest1 extends App{
   // no rejuvenation  
-  val worker = new Worker(2*Huang1995B.MTBF-Huang1995B.base_longevity_interval+1, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
+  val worker = new Worker(2*Huang1995B.MTBF-Huang1995B.base_longevity_interval+1, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.fd)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1  
@@ -32,7 +30,7 @@ object Huang1995BTest1 extends App{
 
 object Huang1995BTest2 extends App{
   // once every 2 weeks 
-  val worker = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
+  val worker = new Worker(14 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.fd)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1  
@@ -43,7 +41,7 @@ object Huang1995BTest2 extends App{
 
 object Huang1995BTest3 extends App{
   // once a week
-  val worker = new Worker(7 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.cfd)
+  val worker = new Worker(7 * 24 * 6, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.fd)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1  

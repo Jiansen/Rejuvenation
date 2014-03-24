@@ -1,11 +1,12 @@
 package uk.ac.ed.inf.lfcs.rejuvenation.test
 
-import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import java.io.File
-import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.ConstantFailureDistribution
+
+import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.UniformFailureDistribution
+import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 
 object TestWorkder extends App{
-  val worker = new Worker(30, 3, 2, new ConstantFailureDistribution(0, 30))
+  val worker = new Worker(30, 3, 2, new UniformFailureDistribution(0, 30))
   val startStates = Array.ofDim[Double](30+3+2)
   startStates(0) = 1  
   worker.report_ptm
