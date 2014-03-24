@@ -11,8 +11,8 @@ object Huang1995B{
   val base_longevity_interval = 3 * 24 * 6 // 3 days
   val rejeneation_time = 1 // 10 minutes
   
-  val cost_down = 5000 / 6
-  val cost_reju = 5 / 6
+  val cost_down = 5000.0 / 6
+  val cost_reju = 5.0 / 6
   
   val fd  =   new UniformFailureDistribution(base_longevity_interval,  2*MTBF-base_longevity_interval)     
 }
