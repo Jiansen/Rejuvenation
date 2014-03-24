@@ -4,6 +4,7 @@ import uk.ac.ed.inf.lfcs.rejuvenation.model.SimpleTerminalConfig
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Simulator
 import uk.ac.ed.inf.lfcs.rejuvenation.model.Worker
 import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.UniformFailureDistribution
+import uk.ac.ed.inf.lfcs.rejuvenation.failuredistribution.ConstantFailureDistribution
 
 object Huang1995A {
   val MTBF = 12 * 30 * 24 * 6 // 12 months
@@ -13,6 +14,8 @@ object Huang1995A {
   
   val cost_down = 1000.0 / 6
   val cost_reju = 40.0 / 6 
+  
+  val fd = ConstantFailureDistribution(base_longevity_interval,  1.0/MTBF)
 }
 
 //object Huang1995ATest1 extends App{
@@ -28,8 +31,7 @@ object Huang1995A {
 
 object Huang1995ATest2 extends App{
 //  once every 3 weeks
-  val fd2  =   new UniformFailureDistribution(7 * 24 * 6,  3*7 * 24 * 6)    
-  val worker = new Worker(21 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, fd2)
+  val worker = new Worker(21 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.fd)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1    
@@ -40,8 +42,7 @@ object Huang1995ATest2 extends App{
 
 object Huang1995ATest3 extends App{
 //  once every two weeks
-  val fd3  =   new UniformFailureDistribution(7 * 24 * 6,  2*7 * 24 * 6)      
-  val worker = new Worker(14 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, fd3)
+  val worker = new Worker(14 * 24 * 6, Huang1995A.failure_repair, Huang1995A.rejeneation_time, Huang1995A.fd)
   
   val startStates = Array.ofDim[Double](worker.full_period)
   startStates(0) = 1    
