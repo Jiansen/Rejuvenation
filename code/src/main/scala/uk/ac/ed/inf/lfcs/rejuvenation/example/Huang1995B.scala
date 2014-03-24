@@ -17,16 +17,14 @@ object Huang1995B{
   val fd  =   new UniformFailureDistribution(base_longevity_interval,  2*MTBF-base_longevity_interval)     
 }
 
-object Huang1995BTest1 extends App{
-  // no rejuvenation  
-  val worker = new Worker(2*Huang1995B.MTBF-Huang1995B.base_longevity_interval+1, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.fd)
-  
-  val startStates = Array.ofDim[Double](worker.full_period)
-  startStates(0) = 1  
-  
-  val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates, 12*30  * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
-}
+//object Huang1995BTest1 extends App{
+//  // no rejuvenation  
+//  val worker = new Worker(2*Huang1995B.MTBF-Huang1995B.base_longevity_interval+1, Huang1995B.failure_repair, Huang1995B.rejeneation_time, Huang1995B.fd)
+//  val startStates = Array.ofDim[Double](worker.full_period)
+//  startStates(0) = 1  
+//  val simu = new Simulator(SimpleTerminalConfig);
+//  simu.simulate(worker, startStates, 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
+//}
 
 object Huang1995BTest2 extends App{
   // once every 2 weeks 
@@ -36,7 +34,7 @@ object Huang1995BTest2 extends App{
   startStates(0) = 1  
   
   val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates, 12*30  * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
+  simu.simulate(worker, startStates, 30 * 12 * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
 }
 
 object Huang1995BTest3 extends App{
@@ -47,7 +45,7 @@ object Huang1995BTest3 extends App{
   startStates(0) = 1  
   
   val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates, 12*30  * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
+  simu.simulate(worker, startStates, 30 * 12 * 24 * 6, 0, Huang1995B.cost_down, Huang1995B.cost_reju)
 }
 
 /*
