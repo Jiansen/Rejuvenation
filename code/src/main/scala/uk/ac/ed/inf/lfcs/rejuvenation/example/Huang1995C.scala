@@ -39,7 +39,7 @@ object Huang1995CTest2 extends App{
   startStates(0) = 1  
   
   val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates, 12 * 30 * 24 * 6, 0, Huang1995C.cost_down, Huang1995C.cost_reju)
+  simu.simulate(worker, startStates, 20* 12 * 30 * 24 * 6, 0, Huang1995C.cost_down, Huang1995C.cost_reju)
 }
 
 object Huang1995CTest3 extends App{
@@ -50,7 +50,7 @@ object Huang1995CTest3 extends App{
   startStates(0) = 1  
   
   val simu = new Simulator(SimpleTerminalConfig);
-  simu.simulate(worker, startStates, 12 * 30 * 24 * 6, 0, Huang1995C.cost_down, Huang1995C.cost_reju)
+  simu.simulate(worker, startStates, 20* 12 * 30 * 24 * 6, 0, Huang1995C.cost_down, Huang1995C.cost_reju)
 }
 
 /*

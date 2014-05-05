@@ -1,8 +1,8 @@
 # java -cp ../code/target/scala-2.10/Rejuvenation.jar uk.ac.ed.inf.lfcs.rejuvenation.example.Huang1995ATest1  > Huang1995A1.dat
 # ./plot_charts.sh Huang1995A1
 
-java -cp ../code/target/scala-2.10/Rejuvenation.jar uk.ac.ed.inf.lfcs.rejuvenation.example.Huang1995ATest2  > Huang1995A2.dat
-./plot_charts.sh Huang1995A2
+# java -cp ../code/target/scala-2.10/Rejuvenation.jar uk.ac.ed.inf.lfcs.rejuvenation.example.Huang1995ATest2  > Huang1995A2.dat
+# ./plot_charts.sh Huang1995A2
 
 java -cp ../code/target/scala-2.10/Rejuvenation.jar uk.ac.ed.inf.lfcs.rejuvenation.example.Huang1995ATest3  > Huang1995A3.dat
 ./plot_charts.sh Huang1995A3
